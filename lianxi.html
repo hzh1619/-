@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>打字游戏</title>
+    <script src="xiaoguo.js"></script>
+</head>
+<body>
+<div class="blood"></div>
+<div class="score">
+    <img src="img/score.png" alt="">
+    <div class="score"></div>
+</div>
+
+
+</body>
+<style>
+.blood{
+    width:200px;
+    height:25px;
+    box-sizing: border-box;
+    border:1px solid orange;
+    border-radius: 25px;
+    background:#843B09;
+    position: absolute;
+    margin;auto;
+    top:28px;
+    left:300px;
+}
+.score{
+    width:250px;;
+    height:60px;
+    position: absolute;
+    margin:auto;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.score>img{
+    width: 100%;
+    height:100%;
+}
+
+</style>
+</html>
+<script>
+
+
+//属性
+function Game(){
+    this.charArr=[
+        ['A','img/A.jpg'],
+        ['B','img/B.jpg'],
+        ['C','img/C.jpg'],
+        ['D','img/D.jpg'],
+        ['E','img/E.jpg'],
+        ['F','img/F.jpg'],
+        ['G','img/G.jpg'],
+        ['H','img/H.jpg'],
+        ['I','img/I.jpg'],
+        ['J','img/J.jpg'],
+        ['K','img/K.jpg'],
+        ['L','img/L.jpg'],
+        ['M','img/M.jpg'],
+        ['N','img/N.jpg'],
+        ['O','img/c.jpg'],
+        ['P','img/a.jpg'],
+        ['Q','img/b.jpg'],
+        ['R','img/c.jpg'],
+        ['S','img/a.jpg'],
+        ['T','img/b.jpg'],
+        ['U','img/c.jpg'],
+        ['V','img/a.jpg'],
+        ['W','img/b.jpg'],
+        ['X','img/c.jpg'],
+        ['Y','img/a.jpg'],
+        ['Z','img/b.jpg']
+    ];
+    this.charLength=5;
+    this.cw=window.innerWidth;
+    this.ch=window.innerHeight;
+    this.speed=10;
+    this.currentEle=[];
+    this.life=10;
+    this.score=0;
+    this.lifeElement=document.querySelector('.life');
+    this.scoreElement=document.querySelector('.score');
+}
+Game.prototype={
+    start:function(){
+        this.getElements(this.charLength);
+        this.drop()
+        this.key()
+    },
+    getElements:function(length){
+        for(let i=0;i<length;i++){
+            this.getChar()
+        }
+
+    },
+    getChar:function(){
+         let num=Math.floor(Math.random()*this.charArr.length);
+         let ele=document.createElement('div');
+         let lefts=Math.random()*(this.cw-200)+100,tops=Math.random()*100;
+         ele.style.cssText=`position:absolute;width:50px;height:60px;padding:5px;text-align:center;line-height:60px;font-size:30px;font-weight:bolder;color:yellow;background:url((${this.charArr[num][1]});left:${lefts}px;top:${tops}px`
+//         ele.innerText=this.charArr[num];
+//        ele.innerText=`width:50px;height:60px;background:url(${this.charArr[num][1]}.png);`
+         document.body.appendChild(ele);
+         this.currentEle.push(ele);
+    },
+    drop:function(){
+        let self=this;
+        this.t=setInterval(function(){
+            for(let i=0;i<self.currentEle.length;i++){
+                let tops=self.currentEle[i].offsetTop+self.speed;
+                self.currentEle[i].style.top=tops+'px';
+                if(tops>500){
+                   document.body.removeChild(self.currentEle[i]);
+                   self.currentEle.splice(i,1);
+//                   this.life--;
+//                   this.lifeElement.innerText=this.life;
+                   //重新开始
+
+                }
+            }
+            if(self.currentEle.length <self.charLength){
+                self.getChar();
+            }
+        },100)
+    },
+    key:function(){
+        document.body.onkeydown=function(e){
+            let code =String.fromCharCode(e.keyCode);
+            for(let i=0;i<this.currentEle.length;i++){
+                if(code==this.currentEle[i].innerText){
+                    document.body.removeChild((this.currentEle[i]));
+                    this.currentEle.splice(i,1);
+                    this.score++;
+                    this.scoreElement.innerText=this.score;
+
+                }
+            }
+            if(this.currentEle.length <this.charLength){
+                this.getChar();
+            }
+        }.bind(this)
+    },
+restart:function(){
+      //停止  元素删除 数据 生命 分数 start
+},
+next:function(){
+
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+let game=new Game();
+console.log(game)
+game.start();
+</script>

@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="en">   //索索引擎是html语言；lang是language的意思；en是English的意思。
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	@keyframes rotate{
+		0%{
+			transform:rotate(0deg);
+			background-color: red;
+		}
+		100%{
+			transform:rotate(360deg);
+			background-color: blue;
+		}
+	}
+
+	
+
+	body{
+        margin:  0px;
+        text-align:center;
+        line-height:30px;
+        color:#fff;
+        font-size: 24px;
+        font-family:"微软雅黑";
+        font-weight:bold;
+        text-shadow:0px 0px 5px #000;
+	}
+	.bg{
+		width:100%;
+     	height:100%;
+     	position: absolute;/*绝对定位*/
+     	background-image:url(back20.jpg);
+     	margin: auto;
+     	/*margin: 100px  400px  100px 350px;*/
+     	background-repeat: no-repeat center;
+     	background-size:100%;
+        background-position: 0px -20px;
+        overflow: hidden;
+
+     	/*background-position: center bottom;*/
+	}
+	.startbox{
+		width: 900px;
+		height: 300px;
+		/*background: red;*/
+		/*margin:0  auto;
+		margin-left: 50px;
+		margin-top: 50px;*/
+		position: absolute;
+		left:0;right:650px;top:130px;bottom:0;
+		margin: 0 auto;
+
+	}
+	.top{
+		width: 700px;
+		height: 280px;
+		margin-left: 120px;
+        /*background: blue;*/
+
+	}
+	.top1{
+		width:150px ;
+		height:200px ;
+		background: url(top1.png) no-repeat center ;
+        
+		float: left;
+		margin-left: 1px;
+		margin-top: 20px;
+
+	}
+	.top2{
+		width:150px ;
+		height:100px ;
+		background: url(top2.png) no-repeat center ;
+        
+		float: left;
+		margin-left: 1px;
+		margin-top: 10px;
+
+	}
+	.top3{
+		width:150px ;
+		height:100px ;
+		background: url(top3.png) no-repeat center ;
+        
+		float: left;
+		margin-left: 1px;
+		margin-top: 10px;
+
+	}
+	.top4{
+		width:150px ;
+		height:200px ;
+		background: url(top4.png) no-repeat center ;
+        
+		float: left;
+		margin-left: 1px;
+		margin-top: 20px;
+
+	}
+	.bottom{
+		width: 716px;
+		height: 150px;
+		/*background: red;*/
+       /* float: left;*/
+
+	}
+	.choose{
+		width: 200px;
+		height: 100px;
+		background:url(easy5.png) no-repeat  ;
+		float: left;
+		margin-left: 80px;
+		margin-top: 50px;
+		cursor:pointer; 
+		/*margin-right: 200px;*/
+		transition:all 1s;
+	}
+	.choose:hover{
+		transform:scale(1.2);
+	}
+
+	.start{
+		width: 200px;
+		height: 113px;
+		background:url(start6.png) no-repeat  ;
+		float:right;
+		margin-top: 50px;
+		cursor:pointer; 
+		transition:all 1s;
+		/*a*/
+	}
+	.start:hover{
+		transform:scale(1.2);
+	}
+
+	.show{
+		width: 800px;
+		height: 85px;
+		/*display: none;*/
+		margin: 0 auto;
+		margin-top: 20px;
+		margin-left: 30px;
+		position: relative;
+		/*position:relative;*/
+		z-index:1;
+		/*background:red;*/
+	}
+	.scor{
+	    width: 250px;
+		height: 80px;
+		background: url(score.png) no-repeat center;
+		
+		float: left;
+		/*background: blue;*/
+	}
+	.life{
+	    width: 250px;
+		height: 60px;
+		background: url(life1.png) no-repeat;
+		float: left;
+		margin-left: 30px;
+		/*background: yellow;*/
+	}
+	.stop{
+	    width: 200px;
+		height: 80px;
+		/*background: green;*/
+		float: right;
+		background: url(stop.png) no-repeat center;
+		/*background: blue;*/
+	}
+	.scorinner{
+	    width: 125px;height: 35px;
+		margin-left: 65px;margin-top: 26px;
+		border-radius: 15px;
+		text-align: center;
+		line-height: 30px;
+		color: blue;
+		font-size:24px;
+		font-family: "微软雅黑"；
+		text-shadow:2px 2px 3px #000;
+		background:#0cecdf;
+		
+	}
+	.lifeinner{
+	    width: 175px;height: 44px;
+	    margin-left: 59px;margin-top: 10px;
+		background: #0cecdf;
+		border-radius: 15px;
+		/*right: 10px;top: 16px;*/	
+        position: absolute;
+        /*right: 10px;top: 16px;*/
+		z-index: -1;
+		/*background: url(progress.png) no-repeat;*/
+		background-position: -20px -5px;
+		/*background-position: 0 0;*/
+		box-shadow: 0 0 10px #000 inset;
+		background: url(lifeinner1.png) no-repeat ;
+		background-size: 100% 100%;
+	    transition:all 2s;
+
+	}
+ .mask{
+        width:100%;height:100%;
+        background:rgba(0,0,0,0.5);
+        position: absolute;
+        left:0;top:0;
+        display:none;
+        z-index:99;
+       /* background: blue;*/
+    } 
+    .overbox{
+        width:484px;height:419px;
+        background:url(over.png) no-repeat center;
+        position: absolute;
+        left:0;right:0;top:0;bottom:0;
+        margin:auto;
+    }
+    .score{
+        width:100px;height:40px;
+        margin-left:300px;
+        margin-top:150px; 
+        line-height:40px;
+    }
+    .maxscore{
+         width:100px;height:40px;
+         margin-left:300px;
+         margin-top:5px;
+         line-height:35px;
+    }
+.btns{
+        width:300px;height:110px;
+        margin: auto;
+        margin-top:45px;
+        /*background: blue;*/
+    }
+.restart{
+        width:100px;height:100px;
+        background:url(restart.png) no-repeat;
+        float:right;
+        cursor:pointer;
+    }
+.quit{
+        width:100px;height:93px;
+        background:url(quit.png);
+        float:left;
+        cursor:pointer;
+        background-size:100% 100%; 
+    }
+
+.mask2{
+    	width:400px;
+    	height:500px;
+    	background-size: 100% 100%;
+        background:rgba(0,0,0,0.5);
+        background: url(stopbox.png) no-repeat center;
+        position: absolute;
+        left:450px;top:90px;
+        display:none;
+        z-index:99;
+        
+
+
+    }
+.stopbox{
+        width: 400px;
+		height: 300px;
+		background: url(stopbox.png) no-repeat;
+		position: absolute;
+		left: 0;right: 0;top: 0;bottom: 0;
+		margin: auto;
+		/*display: flex;
+		align-items:flex-end;
+		justify-content:space-around; 
+*/
+    }
+
+.continue{
+		width: 180px;
+		height: 42px;
+		background: url(continue.png) no-repeat center  ;
+		margin-left:110px;
+		margin-top: 80px;
+		/*position: absolute;*/
+		background-size: 100% 100%;
+		cursor: pointer;
+	}
+
+.stop-restart{
+		width: 185px;
+		height:42px;
+		background: url(restart2.png) no-repeat center;
+		margin-left: 110px;
+		margin-top: 30px;
+		/*position: absolute;*/
+		background-size: 100% 100%;
+		cursor: pointer;
+	}
+
+.stop-quit{
+		width: 185px;
+		height: 42px;
+		background: url(quit1.png) no-repeat center;
+		margin-left: 110px;
+		margin-top: 30px;
+		/*position: absolute;*/
+		background-size: 100% 100%;
+		cursor: pointer;
+	}
+
+.difficult{
+	    width: 700px;
+		height: 473px;
+		position: absolute;
+		background:url(difficult4.png) no-repeat center;
+		left: 0;right: 0;top: 30px;bottom: 0;
+		margin: auto;
+		display: none;
+		z-index: 55;
+
+
+}
+.choosebox{
+		width: 400px;
+		height: 80px;
+		/*background: yellow;*/
+		margin-left: 70px;
+		margin-top: 90px;
+		/*display: flex;*/
+		/*justify-content:space-around;*/
+
+}
+.choosebox div{
+		width:200px;
+		height: 80px;
+		/*background: blue;*/
+		margin-left: 70px;
+		margin-top: 50px;	
+	}
+	.easy{
+		background: url(easy4.png) no-repeat center;
+		margin-top: 90px;
+		/*margin-top: 40px;*/
+	}
+	.medium{
+		background: url(medium4.png) no-repeat center;
+		/*box-shadow: 0 0 5px red;
+*/	}
+	.hard{
+		background: url(hard4.png) no-repeat center;
+	}
+
+
+.back{
+	width: 110px;height: 110px;
+	/*background: green;*/
+	background: url(back4.png);
+	margin:  40px auto;
+	margin-bottom: 525px;
+	margin-right: 120px;
+
+}
+
+.music{
+		width: 50px;
+		height: 50px;
+		border-radius:50%;
+		background: url(music.png) no-repeat center;
+		position: absolute;
+		right: 100px;
+		top:10px;
+		z-index:9999;
+		background-color: #fec230;
+		border: 15px  solid: #fff;
+		transition:all 2s;
+		animation:rotate 3s linear infinite;
+		cursor: pointer;
+	}
+
+
+	</style>
+</head>
+<body>
+<!-- 游戏主界面 -->
+	<div class="bg">
+	<!-- 得分生命显示框 -->
+	    <div class="show">
+
+		    <div class="scor">
+			    <div class="scorinner">0</div>
+		    </div>
+
+		    <div class="life">
+                <div class="lifeinner"></div>
+            </div>
+
+		    <div class="stop"></div>
+	   </div>
+
+	    <div class="startbox">
+	        <div class="top">
+	            <div class="top1"></div>
+		        <div class="top2"></div>	
+	            <div class="top3"></div>
+		        <div class="top4"></div>		                	
+	        </div>
+	        <div class="bottom">
+	            <div class="choose"></div>
+		        <div class="start"></div>
+	        </div>
+	    </div>
+	</div>
+
+
+		<!-- 游戏结束界面 -->
+	<div class="mask">
+        <div class="overbox">
+            <div class="score">0</div>
+            <div class="maxscore">0</div>
+            <div class="btns">
+                <div class="quit"></div>
+                <div class="restart"></div>                
+            </div>
+        </div>
+    </div> 
+
+
+  <!-- 暂停界面 -->
+  <div class="mask2">
+    <div class="stopbox">
+       <div class="continue"></div>
+       <div class="stop-restart"></div>
+       <div class="stop-quit"></div>
+    </div>  
+  </div>
+  <div class="difficult">
+  	<div class="choosebox">
+  		<div class="easy"></div>
+  		<div class="medium"></div>
+  		<div class="hard"></div>
+  	</div>
+  	<div class="back"></div>
+  </div>
+  <div class="music"></div>
+  <audio src="music.mp3" autoplay ></audio>
+  
+</body>
+<script>
+var start = document.querySelector(".start");
+var startbox=document.querySelector(".startbox");
+var restart=document.querySelector(".restart");
+var bg=document.querySelector(".bg");
+var score=document.querySelector(".score");
+var scorinner=document.querySelector(".scorinner");
+var life=document.querySelector(".life");
+var lifeinner=document.querySelector(".lifeinner");
+var stop=document.querySelector(".stop");
+// var restop=document.querySelector(".stopbox");
+// var stopbox=document.querySelector(".stopbox");
+var continuebtn=document.querySelector(".continue"); 
+var stoprestart=document.querySelector(".stop-restart");
+var stopquit=document.querySelector(".stop-quit");
+var quit=document.querySelector(".quit");
+var show=document.querySelector(".show");
+var mask=document.querySelector(".mask");
+var maxscore=document.querySelector(".maxscore");
+
+var mask2=document.querySelector(".mask2");
+var choose=document.querySelector(".choose");
+var difficult=document.querySelector(".difficult");
+var back=document.querySelector(".back");
+var music=document.querySelector(".music");
+var audio=document.querySelector(".audio");
+var choose=document.querySelector(".choose");
+var choosebox=document.querySelector(".choosebox div");
+var audio=document.querySelector("audio")
+
+
+
+// var difficult=document.querySelector(".difficult");
+// var difficult=document.querySelector(".difficult");
+   
+
+var speed=2;
+var t;
+var life=10;
+var count=3;
+var defen=0;
+var data={};//JSON格式
+var fanwei=window.innerWidth-130;
+var bestscore=localStorage.score?localStorage.score:0;
+
+// localStorage.aa=1;
+
+// 单击获取的文档start，事件执行function（）函数
+
+function init(){
+    // 隐藏结束页面
+    mask.style.display="none";
+
+    // 得分归为0
+    defen=0;
+    // 得分容器中变为0
+    scorinner.innerHTML=defen;
+    // 生命值恢复为5
+    life=10;
+    speed=2;
+    // 计算背景大小
+    var zhi=life*20+"%";
+    // 生命值样式回复
+    lifeinner.style.backgroundSize=zhi+" 100%";
+    // 移除页面中的div
+    for(i in data){
+        bg.removeChild(data[i].ele);  
+    }
+    // 恢复数据
+    data={};
+   
+mask2.style.display="none";
+  }
+
+
+  function  create(){
+	// 创建一个字母div
+	var newdiv=document.createElement("div");
+	// 给这个div添加基本的样式属性
+	newdiv.style.cssText="width:130px;height:130px;position:absolute;";
+
+	do{
+    //随机获取65-90之间的数字
+	var rn=Math.floor(Math.random()*26+65);
+    //利用这个随机数得到一个相应的大写字母
+	var zm=String.fromCharCode(rn);
+
+      }while(data[zm])
+    //利用这个大写字母给div、添加相应的背景图片
+	newdiv.style.background="url("+zm+".png)  no-repeat center";
+
+    do{
+    //获取一个随机的left值，范围是在浏览器当中
+	var rleft=Math.random()*fanwei;
+}
+	while  (check(rleft))
+    //给div设置获取到的left值
+    newdiv.style.left=rleft+"px";
+    //获取一个随机的top值，范围是在0-100
+    var rtop=Math.random()*100;
+    //给div设置获取到的top值
+    newdiv.style.top=rtop+"px";
+    //将div插入到bg容器中
+	bg.appendChild(newdiv);
+
+	data[zm]={left:rleft,top:rtop,ele:newdiv};
+}
+
+
+function check(left){
+	for(var i in data){
+		if (data[i].left-130<left&&left<data[i].left+130)
+		{
+			return true;
+		}
+	}
+}
+
+
+var height=window.innerHeight;
+function move(){
+ // 遍历每一个对象中的字母
+     for(var i in data){
+       // 获取每个字母旧的top值
+       var top=data[i].top;
+       // 在旧值的基础上自加5
+       top+=speed;
+       //把新值再赋给对应的属性 
+       
+       data[i].top=top;
+       // 把新值赋值给对应的div的top属性
+       data[i].ele.style.top=top+"px";
+       // 判断当当前的top值超出浏览器的高度
+
+       if(top>height){
+         // 让生命值减少1
+          life--;
+         //换算当前生命值应该减少的量 
+          var zhi=life*20+"%";
+         //把新值赋值给生命值容器 
+        lifeinner.style.backgroundSize=zhi+" 100%";
+         //如果生命值为0 则游戏结束 
+
+         if(life==0){
+            // 停止页面动画
+            clearInterval(t);
+            // 显示游戏结束页面
+            mask.style.display="block";
+            // 在结束页面显示当前得分
+            score.innerHTML=defen;
+            // 如果得分小于历史记录
+            if(defen<=bestscore){
+                // 则在最高得分中依然显示以前的值
+               maxscore.innerHTML=bestscore; 
+            }else{
+                // 否则最高得分就是当前得分
+               maxscore.innerHTML=defen;
+               // 历史记录里面也变成当前得分
+               localStorage.score=defen;
+               bestscore=defen;
+            }
+         }
+            //从页面当中删掉超出的字母 
+			bg.removeChild(data[i].ele);
+			delete data[i];
+			create();
+		}
+	}
+	
+}
+
+
+
+function starthandler(){
+     startbox.style.display="none";
+     show.style.display="block";
+     for (var i = 0; i < count; i++) {
+        create();
+         };
+         //控制台输出
+         t=setInterval(move,50);
+         document.onkeydown=keydownhandler;
+     }
+
+
+
+document.onkeydown=keydownhandler; //键盘函数
+function keydownhandler(e){
+	var keycode=e.keyCode;
+    // 获取对应的字母	
+	var zm=String.fromCharCode(keycode);
+     if(data[zm]){
+    //从页面中移除掉对应的div 
+       bg.removeChild(data[zm].ele);
+    //从对象中删掉对应的字母 
+       delete data[zm];
+    //创建一个新的字母 
+       create();
+       // 得分自加1
+       defen++;
+       // 将得分放置到对应的容器
+       scorinner.innerHTML=defen;
+       if(defen%10==0){
+             speed++;
+        }
+
+     }
+
+}
+
+
+function continuebtnhandler(){
+		t=setInterval(move,50);
+		document.onkeydown=keydownhandler;
+		mask2.style.display="none";
+}
+
+
+  // 点击重新开始按钮
+function restarthandler(){
+	    // 初始化状态
+    init();
+    // 循环创建三个字母
+    document.onkeydown=keydownhandler;//键盘事件
+       // 循环创建三个字母
+    for (var i = 0; i <count; i++) {
+        create(); 
+     };
+     // 开启自动动画
+     t=setInterval(move,50);
+
+  }
+
+
+
+function starthandler(){
+   	  startbox.style.display="none";
+   	  show.style.display="block";
+   	  for (var i = 0; i < count; i++) {
+        create();
+         };
+         t=setInterval(move,50);//控制台输出
+         document.onkeydown=keydownhandler;
+}
+
+
+function stophandler(){
+	clearInterval(t);
+	document.onkeydown=null;
+	mask2.style.display="block";
+}
+
+
+function continuebtnhandler(){
+	t=setInterval(move,50);
+	document.onkeydown=keydownhandler;
+	mask2.style.display="none";
+	
+}
+
+
+// 点击退出按钮
+function quithandler(){
+    init();
+	document.onkeydown=keydownhandler;
+     // 隐藏得分区域
+     show.style.display="none";
+     // 显示开始区域
+     startbox.style.display="block";
+}
+
+function choosehandler(){
+	startbox.style.display="none";
+	difficult.style.display="block";
+
+}
+
+
+function backhandler(){
+	startbox.style.display="block";
+	difficult.style.display="none";
+}
+  
+ function choosebtnhandler(){
+for (var i = 0;i<choosebtn.length; i ++) {
+	choosebtn[i].onclick=function(){
+		for(var i=0;i<choosebtn.length;i++){
+			choosebtn[i].style.boxShadow="none";
+		};
+		this.style.boxShadow="0 0 5px red";
+		if(this.classname=="easy"){
+			count=1;
+
+		}else if(this.classname=="medium"){
+			count=3;
+		}else{
+			count=5;
+		     }	
+	}
+}	
+} 
+
+
+var flag=true;
+function musichandler(){
+	if(flag==true){
+		music.style.animationPlayState="paused";
+		audio.pause();
+}else{
+	music.style.animationPlayState="running";
+	audio.play();
+}
+flag=!flag;
+}
+
+
+choose.onclick=choosehandler;
+start.onclick=starthandler;
+stoprestart.onclick=restarthandler;
+stop.onclick=stophandler;
+// restop.onclick=stophandler;
+restart.onclick=restarthandler;
+
+quit.onclick=quithandler;
+stopquit.onclick=quithandler;
+continuebtn.onclick=continuebtnhandler; 
+back.onclick=backhandler;
+music.onclick=musichandler;
+
+</script>
+</html>

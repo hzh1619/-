@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>页面一</title>
+    <script src="xiaoguo.js"></script>
+</head>
+<body>
+<div class="blood">
+    <div class="life"></div>
+</div>
+<div class="score">
+    <img src="img/score.png" alt="">
+    <div class="sinner">0</div>
+</div>
+<div class="tuichu">
+    退出
+</div>
+
+</body>
+<style>
+    *{
+        padding:0;
+        margin:0;
+        list-style: none;
+    }
+    html{
+        width: 70%;
+        height: 90%;
+        margin:auto;
+        margin-top: 30px;
+        background: url("img/back2.jpg") no-repeat;
+        background-size: cover;
+    }
+
+    .blood{
+        width:200px;
+        height:25px;
+        border-radius: 25px;
+        background:#843B09;
+        position: absolute;
+        margin:auto;
+        top:50px;
+        left:480px;
+        overflow: hidden;
+    }
+    .life{
+        width:200px;
+        height:25px;
+        box-sizing: border-box;
+        border:1px solid orange;
+        border-radius: 25px;
+        background:red;
+        position: absolute;
+        margin:auto;
+        top:0px;
+        left:0px;
+    }
+    .score{
+        width:250px;;
+        height:60px;
+        text-align: center;
+        font-weight: bolder;
+        position: absolute;
+        top:35px;
+        left:700px;
+        margin:auto;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+    .score>.sinner{
+        color:red;
+        font-size: 20px;
+        line-height: 22px;
+        position: absolute;
+        width: 100px;
+        height:22px;
+        background: #7F450E;
+        left:78px;
+        top:20px;
+        border-radius: 10px;
+    }
+    .score>img{
+        width: 100%;
+        height:100%;
+        /*background-size: contain;*/
+    }
+    .tuichu{
+        position: absolute;
+        margin: auto;
+        bottom:20px;
+        right:220px;
+        font-weight: bolder;
+        line-height: 48px;
+        text-align: center;
+        color: white;
+        width: 110px;
+        height:48px;
+        border-radius: 5px;
+        background: url("img/66.png");
+    }
+</style>
+</html>
+<script>
+
+
+    //属性
+    function Game(){
+        this.charArr=[
+            ['A','img/A.png'],
+            ['B','img/B.png'],
+            ['C','img/C.png'],
+            ['D','img/D.png'],
+            ['E','img/E.png'],
+            ['F','img/F.png'],
+            ['G','img/G.png'],
+            ['H','img/H.png'],
+            ['I','img/I.png'],
+            ['J','img/J.png'],
+            ['K','img/K.png'],
+            ['L','img/L.png'],
+            ['M','img/M.png'],
+            ['N','img/N.png'],
+            ['O','img/O.png'],
+            ['P','img/P.png'],
+            ['Q','img/Q.png'],
+            ['R','img/R.png'],
+            ['T','img/T.png'],
+            ['V','img/V.png'],
+            ['W','img/W.png'],
+            ['X','img/X.png'],
+            ['Y','img/Y.png'],
+            ['Z','img/Z.png']
+        ];
+        this.charLength=5;
+        this.cw=window.innerWidth;
+        this.ch=window.innerHeight;
+        this.speed=10;
+        this.arr=[];
+        this.currentEle=[];
+        this.pos=[];
+        this.life=10;
+        this.score=0;
+        this.lifeElement=document.querySelector('.life');
+        this.scoreElement=document.querySelector('.score');
+        this.sinner=document.querySelector('.sinner');
+    }
+    Game.prototype={
+        start:function(){
+            this.getElements(this.charLength);
+            this.drop()
+            this.key()
+
+        },
+        getElements:function(length){
+            for(let i=0;i<length;i++){
+                this.getChar()
+
+            }
+
+        },
+        check:function(text){
+            return this.charArr.some(function(value,index){
+                return value.innerText==text;
+            })
+        },
+        getChar:function(){
+            let num=Math.floor(Math.random()*this.charArr.length);
+            while(this.check(this.charArr[num][0])) {
+                num = Math.floor(Math.random() * this.charArr.length);
+            }
+
+            //创建元素
+            let ele=document.createElement('div');
+            let lefts=Math.random()*(this.cw-600)+300,tops=Math.random()*100;
+
+            ele.style.cssText=`position:absolute;width:60px;height:72px;padding:5px;text-align:center;  line-height:60px;font-size:0px;font-weight:bolder;background:url(${this.charArr[num][1]});background-size:contain;left:${lefts}px;top:${tops}px`
+//         ele.innerText=this.charArr[num];
+//        ele.innerText=`width:50px;height:60px;background:url(${this.charArr[num][1]}.png);`
+
+            //判断位置不重复
+            let cw=window.innerWidth;
+            do{
+                tops=Math.random()*200;
+                lefts=Math.random()*(cw-600)+300;
+            }while(
+                this.checkPos(lefts,tops)
+                )
+
+
+            ele.innerText=this.charArr[num][0];
+            console.log(ele.innerText)
+            document.body.appendChild(ele);
+            this.currentEle.push(ele);
+            this.arr.push(ele);
+        },
+        checkPos:function(l,t){
+            return this.pos.some(function(value,index){
+                return l+70>value.lefts&&l<value.lefts+70&&t+70>value.tops&&t<value.tops+70
+            })
+        },
+        drop:function(){
+            let self=this;
+            this.t=setInterval(function(){
+                for(let i=0;i<self.currentEle.length;i++){
+                    let tops=self.currentEle[i].offsetTop+self.speed;
+                    self.currentEle[i].style.top=tops+'px';
+                    if(tops>500){
+                        document.body.removeChild(self.currentEle[i]);
+                        self.currentEle.splice(i,1);
+                   self.life--;
+
+
+                   self.lifeElement.style.width=self.life*20+'px';
+                   self.sinner.innerText=self.life;
+                        //重新开始
+
+                        //判断；重新开始
+                        if(self.life<0){
+                            let flag=window.confirm('游戏结束!')
+                            if(flag){
+                                // 重新开始
+                                lafg.restart();
+                            }else{
+                                //关闭页面
+                                close();
+                            }
+                        }
+
+                    }
+                }
+                if(self.currentEle.length <self.charLength){
+                    self.getChar();
+                }
+            },200)
+        },
+        key:function(){
+            document.body.onkeydown=function(e){
+                let code =String.fromCharCode(e.keyCode);
+                for(let i=0;i<this.currentEle.length;i++){
+                    if(code==this.currentEle[i].innerText){
+                        document.body.removeChild((this.currentEle[i]));
+                        this.currentEle.splice(i,1);
+                        this.score++;
+                        this.sinner.innerText=this.score;
+
+                    }
+                }
+                if(this.currentEle.length <this.charLength){
+                    this.getChar();
+                }
+            }.bind(this)
+        },
+        restart:function(){
+            //停止  元素删除 数据 生命 分数 start
+            //停止字符掉
+            clearInterval(this.t);
+            //字符清除
+            for(let i=0;i<this.arr.length;i++){
+                document.body.removeChild(this.arr[i]);
+            }
+            this.arr=[];
+            this.pos=[];
+            this.charLength=5;
+            this.sm=10;
+            this.score=0;
+            this.smElement.innerText=this.sm;
+            this.scoreElement.innerText=this.score;
+            this.passl=1;
+            this.pass.innerText=this.passl;
+            this.start();
+        },
+        next:function(){
+            clearInterval(this.t);
+            for(let i=0;i<this.arr.length;i++){
+                document.body.removeChild(this.arr[i]);
+            }
+            if(this.charLength<10){
+                this.charLength++;
+            }
+            this.arr=[];
+            this.pos=[];
+            this.gq+=10;
+            this.start();
+        }
+
+    }
+
+
+    //退出游戏
+    let tuichu=document.querySelector('.tuichu')
+    tuichu.onclick=function () {
+        location.href='index.html'
+    }
+
+
+
+
+
+
+
+
+    let game=new Game();
+    console.log(Game);
+    game.start()
+
+
+
+
+
+    </script>
